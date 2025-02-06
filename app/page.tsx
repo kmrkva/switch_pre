@@ -3,9 +3,8 @@
 import Image from "next/image"
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { Battery, Camera, Cpu, ZoomIn, Wifi, Usb, ChevronRight } from "lucide-react"
+import { Battery, Camera, Cpu, ZoomIn, Wifi, Usb } from "lucide-react"
 import { type LucideIcon } from 'lucide-react'
-
 
 export default function CompareIPhones() {
   const router = useRouter()
@@ -18,62 +17,68 @@ export default function CompareIPhones() {
   const phones = [
     {
       name: "iPhone 16 Pro Max",
+      shortName: "iPhone16ProMax",
+      buyParam: "16promax",
       image: "/iPhone-16-Pro-Max.png",
+      imageHeight: 280,
       price: "From $1199 or $49.95/mo. for 24 mo.*",
       display: {
-        size: '6.9"',
+        label: "iPhone display",
         type: "Super Retina XDR display",
         tech: "ProMotion technology",
         extra: "Always-On display",
       },
-      colors: ["natural", "gray", "black"],
       features: {
         opticalZoom: "Up to 5x",
         chip: "A17 Pro chip",
         camera: "Pro camera system\n48MP Main | Ultra Wide | Telephoto",
-        battery: "Up to 29 hours video playback",
-        wifi: "Wi‑Fi 6E",
-        usb: "Supports USB 3 for up to 20x faster transfers",
+        batteryLife: "Up to 29 hours video playback",
+        iphoneSize: "6.9 inches",
+        transferSpeeds: "Supports USB 3 for up to 20x faster transfers",
       },
     },
     {
       name: "iPhone 16 Pro",
+      shortName: "iPhone16Pro",
+      buyParam: "16pro",
       image: "/iPhone-16-Pro.png",
+      imageHeight: 256,
       price: "From $999 or $41.62/mo. for 24 mo.*",
       display: {
-        size: '6.3"',
+        label: "iPhone display",
         type: "Super Retina XDR display",
         tech: "ProMotion technology",
         extra: "Always-On display",
       },
-      colors: ["natural", "gray", "black"],
       features: {
         opticalZoom: "Up to 5x",
         chip: "A17 Pro chip",
         camera: "Pro camera system\n48MP Main | Ultra Wide | Telephoto",
-        battery: "Up to 29 hours video playback",
-        wifi: "Wi‑Fi 6E",
-        usb: "Supports USB 3 for up to 20x faster transfers",
+        batteryLife: "Up to 29 hours video playback",
+        iphoneSize: "6.3 inches",
+        transferSpeeds: "Supports USB 3 for up to 20x faster transfers",
       },
     },
     {
       name: "iPhone 16",
+      shortName: "iPhone16",
+      buyParam: "16",
       image: "/iPhone-16.png",
+      imageHeight: 248,
       price: "From $799 or $33.29/mo. for 24 mo.*",
       display: {
-        size: '6.1"',
+        label: "iPhone display",
         type: "Super Retina XDR display",
-        tech: "",
-        extra: "",
+        tech: "❌ no ProMotion technology",
+        extra: "❌ no Always-On display",
       },
-      colors: ["blue", "pink", "yellow", "black"],
       features: {
         opticalZoom: "Up to 2x",
         chip: "A16 Bionic chip",
         camera: "Dual-camera system\n48MP Main | Ultra Wide",
-        battery: "Up to 26 hours video playback",
-        wifi: "Wi‑Fi 6",
-        usb: "Supports USB 2",
+        batteryLife: "Up to 26 hours video playback",
+        iphoneSize: "6.1 inches",
+        transferSpeeds: "Supports USB 2",
       },
     },
   ]
@@ -84,15 +89,20 @@ export default function CompareIPhones() {
       newState[index] = true
       return newState
     })
-    setLearnMoreClicks((prevClicks) => [...prevClicks, phones[index].name])
+    setLearnMoreClicks((prevClicks) => [...prevClicks, phones[index].shortName])
   }
 
-  const handleBuy = () => {
+  const handleBuy = (buyParam: string) => {
     const lmclicks = learnMoreClicks.join(",")
-    const moData = mouseoverData.join(",").slice(0, 4000) // Limit to 4000 characters
+    const moData = mouseoverData.map(item => {
+      const [phoneName, feature, duration] = item.split("-")
+      const phone = phones.find(p => p.name === phoneName)
+      if (!phone) return item
+      const shortFeature = feature.slice(0, 3)
+      return `${phone.shortName}-${shortFeature}-${duration}`
+    }).join(",").slice(0, 4000)
 
-    // Redirect with learn more clicks data and mouseover data
-    router.push(`https://vlabURL.com/?lmclicks=${encodeURIComponent(lmclicks)}&mo=${encodeURIComponent(moData)}`)
+    router.push(`https://vlabURL.com/?lmclicks=${encodeURIComponent(lmclicks)}&mo=${encodeURIComponent(moData)}&buy=${buyParam}`)
   }
 
   const handleMouseEnter = (phoneName: string, feature: string) => {
@@ -127,19 +137,9 @@ export default function CompareIPhones() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="space-y-8">
-        <div className="text-center space-y-4">
-          <h1 className="text-2xl font-semibold">Compare iPhone models</h1>
-          <div className="flex items-center justify-center gap-2 text-sm text-blue-600">
-            <span>Shop iPhone</span>
-            <ChevronRight className="w-4 h-4" />
-          </div>
-          <p className="text-sm">
-            Get help choosing <span className="text-blue-600">Chat with a Specialist</span>
-          </p>
-          <p className="text-sm flex items-center justify-center gap-1">
-            Watch a guided tour of iPhone 16 and iPhone 16 Pro
-            <ChevronRight className="w-4 h-4" />
-          </p>
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold">MODEL. Which is best for you? </h1>
+		  <p className="text-lg mt-8">To record your choice, select "Buy" next to the one that is best for you.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -147,24 +147,17 @@ export default function CompareIPhones() {
             <div key={index} className="border rounded-lg p-6 space-y-6">
               <div className="space-y-4">
                 <h2 className="text-xl font-medium text-center">{phone.name}</h2>
-                <div className="relative h-64">
-                  <Image src={phone.image || "/placeholder.svg"} alt={phone.name} fill className="object-contain" />
-                </div>
-                <div className="flex justify-center gap-2">
-                  {phone.colors.map((color, i) => (
-                    <div
-                      key={i}
-                      className={`w-6 h-6 rounded-full border ${
-                        color === "natural" ? "bg-neutral-200" : color === "gray" ? "bg-gray-400" : `bg-${color}-500`
-                      }`}
-                    />
-                  ))}
+                <div className="flex flex-col">
+                  <div className="relative" style={{ height: phone.imageHeight }}>
+                    <Image src={phone.image || "/placeholder.svg"} alt={phone.name} fill className="object-contain" />
+                  </div>
+                  <div style={{ height: `${280 - phone.imageHeight}px` }} />
                 </div>
                 <p className="text-sm text-center">{phone.price}</p>
                 <div className="space-y-4">
                   <button
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
-                    onClick={handleBuy}
+                    onClick={() => handleBuy(phone.buyParam)}
                   >
                     Buy
                   </button>
@@ -173,8 +166,8 @@ export default function CompareIPhones() {
 
               <div className="space-y-4">
                 <p className="text-xs text-center text-gray-600">
-                  If you&apos;d like to learn more information about the phone option(s) click &quot;learn more&quot;
-                  under the option and then hover over the features (e.g., &quot;optical zoom&quot; or
+                  If you&apos;d like to learn more information about the phone in this column, click &quot;learn more&quot;
+                  directly below and then hover over the features (e.g., &quot;optical zoom&quot; or
                   &quot;chip&quot;).
                 </p>
                 <button
@@ -187,8 +180,8 @@ export default function CompareIPhones() {
 
               <div className="space-y-4 pt-4">
                 <FeatureItem
-                  text={`${phone.display.size} ${phone.display.type}`}
-                  subText={`${phone.display.tech}\n${phone.display.extra}`}
+                  text={phone.display.label}
+                  subText={`${phone.display.type}\n${phone.display.tech}\n${phone.display.extra}`}
                   isEnabled={learnMoreStates[index]}
                   onMouseEnter={() => handleMouseEnter(phone.name, "display")}
                   onMouseLeave={handleMouseLeave}
@@ -199,7 +192,7 @@ export default function CompareIPhones() {
                     <FeatureItem
                       key={key}
                       icon={getIconForFeature(key)}
-                      text={key}
+                      text={getFeatureDisplayName(key)}
                       subText={value}
                       isEnabled={learnMoreStates[index]}
                       onMouseEnter={() => handleMouseEnter(phone.name, key)}
@@ -214,6 +207,21 @@ export default function CompareIPhones() {
       </div>
     </div>
   )
+}
+
+function getFeatureDisplayName(feature: string): string {
+  switch (feature) {
+    case "batteryLife":
+      return "battery life"
+    case "transferSpeeds":
+      return "transfer speeds & USB"
+    case "iphoneSize":
+      return "iPhone size"
+    case "opticalZoom":
+      return "optical zoom"
+    default:
+      return feature
+  }
 }
 
 function FeatureItem({
@@ -249,28 +257,27 @@ function FeatureItem({
             <Icon className="w-6 h-6" />
           </div>
         )}
-        <p className="text-sm">{text.split(" ")[0]}</p>
+        <p className="text-sm">{text}</p>
       </div>
     </div>
   )
 }
 
 function getIconForFeature(feature: string): LucideIcon | undefined {
-  switch (feature.toLowerCase()) {
-    case "opticalzoom":
+  switch (feature) {
+    case "opticalZoom":
       return ZoomIn
     case "chip":
       return Cpu
     case "camera":
       return Camera
-    case "battery":
+    case "batteryLife":
       return Battery
-    case "wifi":
+    case "iphoneSize":
       return Wifi
-    case "usb":
+    case "transferSpeeds":
       return Usb
     default:
       return undefined
   }
 }
-
