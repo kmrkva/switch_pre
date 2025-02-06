@@ -11,6 +11,7 @@ export default function CompareIPhones() {
   const [learnMoreStates, setLearnMoreStates] = useState([false, false, false])
   const [learnMoreClicks, setLearnMoreClicks] = useState<string[]>([])
   const [mouseoverData, setMouseoverData] = useState<string[]>([])
+  const [hasClickedTopImage, setHasClickedTopImage] = useState(false)
   const mouseoverStartTime = useRef<number | null>(null)
   const currentMouseover = useRef<string | null>(null)
 
@@ -92,7 +93,7 @@ export default function CompareIPhones() {
     setLearnMoreClicks((prevClicks) => [...prevClicks, phones[index].shortName])
   }
 
-  const handleBuy = (buyParam: string) => {
+  const handleRedirect = (buyParam: string = '') => {
     const lmclicks = learnMoreClicks.join(",")
     const moData = mouseoverData.map(item => {
       const [phoneName, feature, duration] = item.split("-")
@@ -102,7 +103,12 @@ export default function CompareIPhones() {
       return `${phone.shortName}-${shortFeature}-${duration}`
     }).join(",").slice(0, 4000)
 
-    router.push(`https://vlabURL.com/?lmclicks=${encodeURIComponent(lmclicks)}&mo=${encodeURIComponent(moData)}&buy=${buyParam}`)
+    router.push(`https://vlabURL.com/?lmclicks=${encodeURIComponent(lmclicks)}&mo=${encodeURIComponent(moData)}&exit=${hasClickedTopImage ? 1 : 0}&buy=${buyParam}`)
+  }
+
+  const handleTopImageClick = () => {
+    setHasClickedTopImage(true)
+    handleRedirect()
   }
 
   const handleMouseEnter = (phoneName: string, feature: string) => {
@@ -135,18 +141,18 @@ export default function CompareIPhones() {
   }, [])
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="relative w-full mb-8">
+    <div className="max-w-7xl mx-auto">
+      <div className="relative w-full" onClick={handleTopImageClick}>
         <Image 
           src="/topbrowser.png" 
           alt="Top browser" 
           layout="responsive" 
           width={1200} 
           height={300} 
-          className="object-cover"
+          className="object-cover cursor-pointer"
         />
       </div>
-      <div className="space-y-8">
+      <div className="px-4 py-8 space-y-8">
         <div className="text-center">
           <h1 className="text-2xl font-semibold">MODEL. Which is best for you? </h1>
 		  <p className="text-lg mt-8">To record your choice, select Buy next to the one that is best for you.</p>
@@ -167,7 +173,7 @@ export default function CompareIPhones() {
                 <div className="space-y-4">
                   <button
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
-                    onClick={() => handleBuy(phone.buyParam)}
+                    onClick={() => handleRedirect(phone.buyParam)}
                   >
                     Buy
                   </button>
