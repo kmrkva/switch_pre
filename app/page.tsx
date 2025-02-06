@@ -139,7 +139,7 @@ export default function CompareIPhones() {
       <div className="space-y-8">
         <div className="text-center">
           <h1 className="text-2xl font-semibold">MODEL. Which is best for you? </h1>
-		  <p className="text-lg mt-8">To record your choice, select "Buy" next to the one that is best for you.</p>
+		  <p className="text-lg mt-8">To record your choice, select Buy next to the one that is best for you.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
