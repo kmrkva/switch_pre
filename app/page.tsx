@@ -93,23 +93,24 @@ export default function CompareIPhones() {
     setLearnMoreClicks((prevClicks) => [...prevClicks, phones[index].shortName])
   }
 
-  const handleRedirect = (buyParam: string = '') => {
-    const lmclicks = learnMoreClicks.join(",")
-    const moData = mouseoverData.map(item => {
-      const [phoneName, feature, duration] = item.split("-")
-      const phone = phones.find(p => p.name === phoneName)
-      if (!phone) return item
-      const shortFeature = feature.slice(0, 3)
-      return `${phone.shortName}-${shortFeature}-${duration}`
-    }).join(",").slice(0, 4000)
+// Instead of having separate handlers, we'll pass both parameters
+const handleRedirect = (buyParam: string = '', exitValue: number = 0) => {
+  const lmclicks = learnMoreClicks.join(",")
+  const moData = mouseoverData.map(item => {
+    const [phoneName, feature, duration] = item.split("-")
+    const phone = phones.find(p => p.name === phoneName)
+    if (!phone) return item
+    const shortFeature = feature.slice(0, 3)
+    return `${phone.shortName}-${shortFeature}-${duration}`
+  }).join(",").slice(0, 4000)
 
-    router.push(`https://vlabURL.com/?lmclicks=${encodeURIComponent(lmclicks)}&mo=${encodeURIComponent(moData)}&exit=${hasClickedTopImage ? 1 : 0}&buy=${buyParam}`)
-  }
+  router.push(`https://vlabURL.com/?lmclicks=${encodeURIComponent(lmclicks)}&mo=${encodeURIComponent(moData)}&exit=${exitValue}&buy=${buyParam}`)
+}
 
-  const handleTopImageClick = () => {
-    setHasClickedTopImage(true)
-    handleRedirect()
-  }
+const handleTopImageClick = () => {
+  setHasClickedTopImage(true)
+  handleRedirect('', 1)  // Pass exit=1 directly here
+}
 
   const handleMouseEnter = (phoneName: string, feature: string) => {
     if (learnMoreStates[phones.findIndex((phone) => phone.name === phoneName)]) {
