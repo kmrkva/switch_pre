@@ -11,7 +11,6 @@ export default function CompareIPhones() {
   const [learnMoreStates, setLearnMoreStates] = useState([false, false, false])
   const [learnMoreClicks, setLearnMoreClicks] = useState<string[]>([])
   const [mouseoverData, setMouseoverData] = useState<string[]>([])
-  const [hasClickedTopImage, setHasClickedTopImage] = useState(false)
   const mouseoverStartTime = useRef<number | null>(null)
   const currentMouseover = useRef<string | null>(null)
 
@@ -93,24 +92,22 @@ export default function CompareIPhones() {
     setLearnMoreClicks((prevClicks) => [...prevClicks, phones[index].shortName])
   }
 
-// Instead of having separate handlers, we'll pass both parameters
-const handleRedirect = (buyParam: string = '', exitValue: number = 0) => {
-  const lmclicks = learnMoreClicks.join(",")
-  const moData = mouseoverData.map(item => {
-    const [phoneName, feature, duration] = item.split("-")
-    const phone = phones.find(p => p.name === phoneName)
-    if (!phone) return item
-    const shortFeature = feature.slice(0, 3)
-    return `${phone.shortName}-${shortFeature}-${duration}`
-  }).join(",").slice(0, 4000)
+  const handleRedirect = (buyParam: string = '', exitValue: number = 0) => {
+    const lmclicks = learnMoreClicks.join(",")
+    const moData = mouseoverData.map(item => {
+      const [phoneName, feature, duration] = item.split("-")
+      const phone = phones.find(p => p.name === phoneName)
+      if (!phone) return item
+      const shortFeature = feature.slice(0, 3)
+      return `${phone.shortName}-${shortFeature}-${duration}`
+    }).join(",").slice(0, 4000)
 
-  router.push(`https://vlabURL.com/?lmclicks=${encodeURIComponent(lmclicks)}&mo=${encodeURIComponent(moData)}&exit=${exitValue}&buy=${buyParam}`)
-}
+    router.push(`https://vlabURL.com/?lmclicks=${encodeURIComponent(lmclicks)}&mo=${encodeURIComponent(moData)}&exit=${exitValue}&buy=${buyParam}`)
+  }
 
-const handleTopImageClick = () => {
-  setHasClickedTopImage(true)
-  handleRedirect('', 1)  // Pass exit=1 directly here
-}
+  const handleTopImageClick = () => {
+    handleRedirect('', 1)  // Pass exit=1 directly here
+  }
 
   const handleMouseEnter = (phoneName: string, feature: string) => {
     if (learnMoreStates[phones.findIndex((phone) => phone.name === phoneName)]) {
