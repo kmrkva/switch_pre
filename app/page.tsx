@@ -136,6 +136,16 @@ export default function CompareIPhones() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="relative w-full mb-8">
+        <Image 
+          src="/topbrowser.png" 
+          alt="Top browser" 
+          layout="responsive" 
+          width={1200} 
+          height={300} 
+          className="object-cover"
+        />
+      </div>
       <div className="space-y-8">
         <div className="text-center">
           <h1 className="text-2xl font-semibold">MODEL. Which is best for you? </h1>
