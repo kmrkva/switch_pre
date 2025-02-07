@@ -152,8 +152,8 @@ export default function CompareIPhones() {
       </div>
       <div className="px-4 py-8 space-y-8">
         <div className="text-center">
-          <h1 className="text-2xl font-semibold">Would you like to switch to the iPhone 15 Pro or 15 Pro Max? </h1>
-		  <p className="text-base mt-2">On this screen, you can choose any option (any of the 3 iPhones, learn more or other buttons).</p>
+          <h1 className="text-2xl font-semibold">Would you like to switch to the iPhone 16 Pro or 16 Pro Max? </h1>
+		  <p className="text-base mt-2">On this screen, you can choose any option (any of the 3 iPhones) or you can click learn more or other buttons.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
