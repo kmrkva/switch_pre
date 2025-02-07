@@ -150,17 +150,11 @@ export default function CompareIPhones() {
           className="object-cover cursor-pointer"
         />
       </div>
-      <div className="px-4 py-8 space-y-8 mt-16">  {/* Added mt-16 to move content down */}
+      <div className="px-4 py-8 space-y-8">
         <div className="text-center">
           <h1 className="text-2xl font-semibold">Would you like to switch to the iPhone 16 Pro or 16 Pro Max? </h1>
 		  <p className="text-base mt-2">On this screen, you can choose any option (any of the 3 iPhones) or you can click learn more or other buttons.</p>
         </div>
-
-        {/* Rest of the existing code remains the same */}
-      </div>
-    </div>
-  )
-}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {phones.map((phone, index) => (
