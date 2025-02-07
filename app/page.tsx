@@ -139,7 +139,7 @@ export default function CompareIPhones() {
   }, [])
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-5xl mx-auto px-4">
       <div className="relative w-full" onClick={handleTopImageClick}>
         <Image 
           src="/topbrowser.png" 
