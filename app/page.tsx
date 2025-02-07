@@ -151,6 +151,15 @@ export default function CompareIPhones() {
         />
       </div>
       <div className="px-4 py-8 space-y-8">
+        <div className="text-center h-0 invisible">
+          <div className="flex justify-center items-center">
+            <Check className="w-6 h-6 mr-2 text-green-500" />
+            <span className="text-base">Thank you for your order.</span>
+            <span className="text-base text-blue-500 ml-2">View order confirmation</span>
+          </div>
+          <p className="text-base font-semibold mt-6">It's not too late to upgrade!</p>
+        </div>
+
         <div className="text-center">
           <h1 className="text-2xl font-semibold">Would you like to switch to the iPhone 16 Pro or 16 Pro Max? </h1>
 		  <p className="text-base mt-2">On this screen, you can choose any option (any of the 3 iPhones) or you can click learn more or other buttons.</p>
