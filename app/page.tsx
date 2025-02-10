@@ -157,7 +157,7 @@ export default function CompareIPhones() {
             <span className="text-base">Thank you for your order.</span>
             <span className="text-base text-blue-500 ml-2">View order confirmation</span>
           </div>
-          <p className="text-2x1 font-semibold mt-6">It is not too late to upgrade!</p>
+          <p className="text-2x1 font-semibold mt-6">It is not too late to upgrade:</p>
         </div>
 
         <div className="text-center">
@@ -169,7 +169,7 @@ export default function CompareIPhones() {
           {phones.map((phone, index) => (
             <div key={index} className="border rounded-lg p-6 space-y-6">
               <div className="space-y-4">
-                <h2 className="text-xl font-medium text-center">{phone.name}</h2>
+                <h2 className="text-xl font-semibold text-center">{phone.name}</h2>
                 <div className="flex flex-col">
                   <div className="relative" style={{ height: phone.imageHeight }}>
                     <Image src={phone.image || "/placeholder.svg"} alt={phone.name} fill className="object-contain" />
