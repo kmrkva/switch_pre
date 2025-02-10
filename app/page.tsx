@@ -6,6 +6,18 @@ import { useRouter } from "next/navigation"
 import { Battery, Camera, Cpu, ZoomIn, Maximize, Usb, Check } from "lucide-react"
 import { type LucideIcon } from 'lucide-react'
 
+function getQueryParams(): Record<string, string> {
+  if (typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search)
+    const params: Record<string, string> = {}
+    urlParams.forEach((value, key) => {
+      params[key] = value
+    })
+    return params
+  }
+  return {}
+}
+
 export default function CompareIPhones() {
   const router = useRouter()
   const [learnMoreStates, setLearnMoreStates] = useState([false, false, false])
@@ -13,7 +25,13 @@ export default function CompareIPhones() {
   const [mouseoverData, setMouseoverData] = useState<string[]>([])
   const mouseoverStartTime = useRef<number | null>(null)
   const currentMouseover = useRef<string | null>(null)
+  const [qualtricsParms, setQualtricsParms] = useState<Record<string, string>>({})
 
+  useEffect(() => {
+    // Store Qualtrics parameters on initial load
+    setQualtricsParms(getQueryParams())
+  }, [])
+  
   const phones = [
     {
       name: "iPhone 16 Pro Max",
@@ -93,6 +111,7 @@ export default function CompareIPhones() {
   }
 
   const handleRedirect = (buyParam: string = '', exitValue: number = 0) => {
+    // Construct URL with original and Qualtrics parameters
     const lmclicks = learnMoreClicks.join(",")
     const moData = mouseoverData.map(item => {
       const [phoneName, feature, duration] = item.split("-")
@@ -102,8 +121,19 @@ export default function CompareIPhones() {
       return `${phone.shortName}-${shortFeature}-${duration}`
     }).join(",").slice(0, 4000)
 
-    router.push(`https://baylor.qualtrics.com/jfe/form/SV_cUs5YHREWAFwGSG/?lmclicks=${encodeURIComponent(lmclicks)}&mo=${encodeURIComponent(moData)}&exit=${exitValue}&buy=${buyParam}`)
+    // Construct URL with existing Qualtrics parameters and new parameters
+    const baseUrl = 'https://baylor.qualtrics.com/jfe/form/SV_cUs5YHREWAFwGSG/'
+    const queryParams = new URLSearchParams({
+      ...qualtricsParms,
+      lmclicks: lmclicks,
+      mo: moData,
+      exit: exitValue.toString(),
+      buy: buyParam
+    })
+
+    router.push(`${baseUrl}?${queryParams.toString()}`)
   }
+
 
   const handleTopImageClick = () => {
     handleRedirect('', 1)  // Pass exit=1 directly here
