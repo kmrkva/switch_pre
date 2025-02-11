@@ -150,7 +150,16 @@ export default function CompareIPhones() {
     if (mouseoverStartTime.current && currentMouseover.current) {
       const duration = Date.now() - mouseoverStartTime.current
       if (duration >= 20) {
-        setMouseoverData((prevData) => [...prevData, `${currentMouseover.current}-${duration}`])
+        const [phoneName, feature] = currentMouseover.current.split("-")
+        setMouseoverData((prevData) => {
+          const newData = [...prevData]
+          const phone = phones.find(p => p.name === phoneName)
+          if (phone) {
+            const shortFeature = feature.slice(0, 3)
+            newData.push(`${phone.shortName}-${shortFeature}-${duration}`)
+          }
+          return newData
+        })
       }
       mouseoverStartTime.current = null
       currentMouseover.current = null
@@ -162,7 +171,16 @@ export default function CompareIPhones() {
       if (mouseoverStartTime.current && currentMouseover.current) {
         const duration = Date.now() - mouseoverStartTime.current
         if (duration >= 20) {
-          setMouseoverData((prevData) => [...prevData, `${currentMouseover.current}-${duration}`])
+          const [phoneName, feature] = currentMouseover.current.split("-")
+          setMouseoverData((prevData) => {
+            const newData = [...prevData]
+            const phone = phones.find(p => p.name === phoneName)
+            if (phone) {
+              const shortFeature = feature.slice(0, 3)
+              newData.push(`${phone.shortName}-${shortFeature}-${duration}`)
+            }
+            return newData
+          })
         }
       }
     }
@@ -299,7 +317,7 @@ function FeatureItem({
       onMouseLeave={onMouseLeave}
     >
       {isEnabled && (
-        <div className="w-full h-full min-h-[80px] opacity-0 group-hover:opacity-100 absolute inset-0 transition-opacity duration-200 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm rounded-md">
+        <div className="w-full h-full min-h-[80px] opacity-0 group-hover:opacity-100 absolute inset-0 transition-opacity duration-200 flex flex-col items-center justify-center bg-white/80 backdrop-blu[..]">
           <p className="text-sm font-medium">{text}</p>
           {subText && <p className="text-xs text-gray-600 whitespace-pre-line">{subText}</p>}
         </div>
