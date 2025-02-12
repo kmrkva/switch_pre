@@ -186,7 +186,7 @@ export default function CompareIPhones() {
         </div>
 
         <div className="text-center">
-          <h1 className="text-2xl font-semibold">Would you like to switch to the iPhone 16 Pro or iPhone 16?</h1>
+          <h1 className="text-2xl font-semibold">Would you like to switch to the iPhone 16 Pro?</h1>
           <p className="text-base mt-2">On this screen, you can choose either of the 2 iPhones or you can click learn more to get additional information.</p>
         </div>
 
@@ -202,13 +202,16 @@ export default function CompareIPhones() {
                   <div style={{ height: `${280 - phone.imageHeight}px` }} />
                 </div>
                 <p className="text-sm text-center">{phone.price}</p>
-                <div className="space-y-4">
+                <div>
                   <button
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
                     onClick={() => handleRedirect(phone.buyParam)}
                   >
                     Buy
                   </button>
+                  <p className="text-xs text-center text-gray-600 mt-1">
+                    {phone.buyParam === "16pro" ? "(Switch to iPhone 16 Pro & Update Order)" : "(Proceed with iPhone 16)"}
+                  </p>
                 </div>
               </div>
 
