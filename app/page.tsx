@@ -134,7 +134,6 @@ export default function CompareIPhones() {
     router.push(`${baseUrl}?${queryParams.toString()}`)
   }
 
-
   const handleTopImageClick = () => {
     handleRedirect('', 1)  // Pass exit=1 directly here
   }
@@ -209,8 +208,8 @@ export default function CompareIPhones() {
         </div>
 
         <div className="text-center">
-          <h1 className="text-2xl font-semibold">Would you like to switch to the iPhone 16 Pro or 16 Pro Max? </h1>
-		  <p className="text-base mt-2">On this screen, you can choose any option (any of the 3 iPhones) or you can click learn more or other buttons.</p>
+          <h1 className="text-2xl font-semibold">Would you like to switch to the iPhone 16 Pro or 16 Pro Max?</h1>
+          <p className="text-base mt-2">On this screen, you can choose any option (any of the 3 iPhones) or you can click learn more to get additional information.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -249,29 +248,31 @@ export default function CompareIPhones() {
                 </button>
               </div>
 
-              <div className="space-y-4 pt-4">
-                <FeatureItem
-                  text={phone.display.label}
-                  subText={`${phone.display.type}\n${phone.display.tech}\n${phone.display.extra}`}
-                  isEnabled={learnMoreStates[index]}
-                  onMouseEnter={() => handleMouseEnter(phone.name, "display")}
-                  onMouseLeave={handleMouseLeave}
-                />
+              {learnMoreStates[index] && (
+                <div className="space-y-4 pt-4">
+                  <FeatureItem
+                    text={phone.display.label}
+                    subText={`${phone.display.type}\n${phone.display.tech}\n${phone.display.extra}`}
+                    isEnabled={learnMoreStates[index]}
+                    onMouseEnter={() => handleMouseEnter(phone.name, "display")}
+                    onMouseLeave={handleMouseLeave}
+                  />
 
-                <div className="space-y-4 grid grid-cols-1 gap-2">
-                  {Object.entries(phone.features).map(([key, value]) => (
-                    <FeatureItem
-                      key={key}
-                      icon={getIconForFeature(key)}
-                      text={getFeatureDisplayName(key)}
-                      subText={value}
-                      isEnabled={learnMoreStates[index]}
-                      onMouseEnter={() => handleMouseEnter(phone.name, key)}
-                      onMouseLeave={handleMouseLeave}
-                    />
-                  ))}
+                  <div className="space-y-4 grid grid-cols-1 gap-2">
+                    {Object.entries(phone.features).map(([key, value]) => (
+                      <FeatureItem
+                        key={key}
+                        icon={getIconForFeature(key)}
+                        text={getFeatureDisplayName(key)}
+                        subText={value}
+                        isEnabled={learnMoreStates[index]}
+                        onMouseEnter={() => handleMouseEnter(phone.name, key)}
+                        onMouseLeave={handleMouseLeave}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           ))}
         </div>
@@ -317,7 +318,7 @@ function FeatureItem({
       onMouseLeave={onMouseLeave}
     >
       {isEnabled && (
-        <div className="w-full h-full min-h-[80px] opacity-0 group-hover:opacity-100 absolute inset-0 transition-opacity duration-200 flex flex-col items-center justify-center bg-white/80 backdrop-blu[..]">
+        <div className="w-full h-full min-h-[80px] opacity-0 group-hover:opacity-100 absolute inset-0 transition-opacity duration-200 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
           <p className="text-sm font-medium">{text}</p>
           {subText && <p className="text-xs text-gray-600 whitespace-pre-line">{subText}</p>}
         </div>
