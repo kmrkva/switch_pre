@@ -20,7 +20,7 @@ function getQueryParams(): Record<string, string> {
 
 export default function CompareIPhones() {
   const router = useRouter()
-  const [learnMoreStates, setLearnMoreStates] = useState([false, false, false])
+  const [learnMoreStates, setLearnMoreStates] = useState([false, false])
   const [learnMoreClicks, setLearnMoreClicks] = useState<string[]>([])
   const [mouseoverData, setMouseoverData] = useState<string[]>([])
   const mouseoverStartTime = useRef<number | null>(null)
@@ -33,28 +33,6 @@ export default function CompareIPhones() {
   }, [])
   
   const phones = [
-    {
-      name: "iPhone 16 Pro Max",
-      shortName: "iPhone16ProMax",
-      buyParam: "16promax",
-      image: "/iPhone-16-Pro-Max.png",
-      imageHeight: 280,
-      price: "From $1199 or $49.95/mo. for 24 mo.*",
-      display: {
-        label: "iPhone display",
-        type: "Super Retina XDR display",
-        tech: "ProMotion technology",
-        extra: "Always-On display",
-      },
-      features: {
-        opticalZoom: "Up to 5x",
-        chip: "A17 Pro chip",
-        camera: "Pro camera system\n48MP Main | Ultra Wide | Telephoto",
-        batteryLife: "Up to 29 hours video playback",
-        iphoneSize: "6.9 inches",
-        transferSpeeds: "Supports USB 3 for up to 20x faster transfers",
-      },
-    },
     {
       name: "iPhone 16 Pro",
       shortName: "iPhone16Pro",
@@ -208,11 +186,11 @@ export default function CompareIPhones() {
         </div>
 
         <div className="text-center">
-          <h1 className="text-2xl font-semibold">Would you like to switch to the iPhone 16 Pro or 16 Pro Max?</h1>
-          <p className="text-base mt-2">On this screen, you can choose any option (any of the 3 iPhones) or you can click learn more to get additional information.</p>
+          <h1 className="text-2xl font-semibold">Would you like to switch to the iPhone 16 Pro or iPhone 16?</h1>
+          <p className="text-base mt-2">On this screen, you can choose either of the 2 iPhones or you can click learn more to get additional information.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center">
           {phones.map((phone, index) => (
             <div key={index} className="border rounded-lg p-6 space-y-6">
               <div className="space-y-4">
