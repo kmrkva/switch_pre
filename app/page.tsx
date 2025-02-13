@@ -210,7 +210,7 @@ export default function CompareIPhones() {
                     Select
                   </button>
                   <p className="text-xs text-center text-gray-600">
-                    {phone.shortName === "iPhone16Pro" ? "(Switch to iPhone 16 Pro & Update Order)" : "(Proceed with iPhone 16)"}
+                    {phone.shortName === "iPhone16Pro" ? "(Switch to iPhone 16 Pro & Update Cart)" : "(Proceed with iPhone 16)"}
                   </p>
                 </div>
               </div>
