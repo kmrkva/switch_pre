@@ -202,7 +202,7 @@ export default function CompareIPhones() {
                   <div style={{ height: `${280 - phone.imageHeight}px` }} />
                 </div>
                 <p className="text-sm text-center">{phone.price}</p>
-                <div className="space-y-4">
+                <div className="space-y-1">
                   <button
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
                     onClick={() => handleRedirect(phone.buyParam)}
